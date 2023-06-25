@@ -48,7 +48,8 @@ increment = True
 while True:
     # Membaca nilai dari potensiometer
     pot_value = pot.read()
-    print('Kecepatan: ' + str(pot_value) + ' Km/H')
+    pot_value_mapped = int(((pot_value - 3) * 250) / 1021)
+    print('Kecepatan: ' + str(pot_value_mapped) + ' Km/H')
     sleep(0.1)
     
     try:
@@ -62,7 +63,7 @@ while True:
         dht_data = temp
         publish_data(DHT_TOPIC, dht_data)
         
-        pot_data = pot_value
+        pot_data = pot_value_mapped
         publish_data(POT_TOPIC, pot_data)
         
         if pot_value == 3:
@@ -84,3 +85,6 @@ while True:
         
     except OSError as e:
         print('Failed to read sensor.')
+
+
+
